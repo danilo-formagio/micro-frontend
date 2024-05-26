@@ -34,16 +34,15 @@ module.exports = {
       template: "./index.html",
     }),
     new ModuleFederationPlugin({
-      name: "Host",
+      name: "MicroFrontend1",
       filename: "remoteEntry.js",
-      remotes: {
-        MicroFrontend1: "MicroFrontend1@http://localhost:3001/remoteEntry.js",
-        MicroFrontend2: "MicroFrontend2@http://localhost:3002/remoteEntry.js",
+      exposes: {
+        "./Component": "./src/Component",
       },
       shared: {
         ...deps,
-        react: { singleton: true, eager: true, requiredVersion: deps.react },
-        "react-dom": { singleton: true, eager: true, requiredVersion: deps["react-dom"] },
+        react: { singleton: true,  eager: true, requiredVersion: deps.react },
+        "react-dom": { singleton: true,  eager: true, requiredVersion: deps["react-dom"] },
       },
     }),
   ],
@@ -53,7 +52,7 @@ module.exports = {
   devServer: {
     host: "localhost",
     historyApiFallback: true,
-    port: 3000,
+    port: 3001,
     open: true,
     hot: true,
   },
